@@ -1,0 +1,12 @@
+.media-table {
+  color: $text-light;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+}
