@@ -1,59 +1,42 @@
-<template lang="pug">
-  .default
-    SearchPopup(v-if="is_visible_popup" @hide="hideSearch")
-    .show-search(@click="showSearch")
-      img(src="/svg/search.svg" width="50" alt="")
-    .default__wrap
-      .default__menu
-        .default__menu-logo
-          Logo
-        Menu
-      .default__content
-        Nuxt
-    Footer
-</template>
-<script>
-import Menu from "../components/Menu";
-import Logo from "../components/Logo";
-import Footer from "../components/Footer";
-import SearchPopup from "@/SearchPopup";
+<script setup lang="ts">
+const route = useRoute();
+useHead({
+  link: [{ rel: "canonical", href: "burdujasergiu.com" + route.path }],
+});
+const is_visible_popup = ref(false);
 
-export default {
-  head() {
-    return {
-      link: [
-        {rel: "canonical", href: "burdujasergiu.com" + this.$route.path}
-      ]
-    }
-  },
-  data() {
-    return {
-      is_visible_popup: false
-    }
-  },
-  methods: {
-    showSearch() {
-      this.is_visible_popup = true;
-    },
-    hideSearch() {
-      this.is_visible_popup = false;
-    }
-  },
-  components: {
-    Menu,
-    Logo,
-    Footer,
-    SearchPopup
-  },
-  mounted() {
-    document.addEventListener('keyup', (e) => {
-      if (e.code === 'Escape' && this.is_visible_popup) {
-        this.hideSearch();
-      }
-    });
-  }
+function showSearch() {
+  const is_visible_popup = ref(true);
 }
+function hideSearch() {
+  const is_visible_popup = ref(false);
+}
+onMounted(() => {
+  document.addEventListener("keyup", (e) => {
+    if (e.code === "Escape" && is_visible_popup) {
+      hideSearch();
+    }
+  });
+});
 </script>
+<template>
+  <div class="default">
+    <!-- <SearchPopup v-if="is_visible_popup" @hide="hideSearch"></SearchPopup> -->
+    <!-- <div class="show-search" @click="showSearch"> -->
+    <!--   <img src="/svg/search.svg" width="50" alt="" /> -->
+    <!-- </div> -->
+    <div class="default__wrap">
+      <div class="default__menu">
+        <!-- <div class="default__menu-logo"><Logo></Logo></div> -->
+        <!-- <menu></menu> -->
+      </div>
+      <div class="default__content">
+        <slot />
+      </div>
+    </div>
+    <!-- <footer></footer> -->
+  </div>
+</template>
 <style lang="scss">
 .default {
   &__wrap {
@@ -81,7 +64,7 @@ export default {
   top: 3rem;
   right: 3rem;
   cursor: pointer;
-  transition: all .4s;
+  transition: all 0.4s;
   z-index: 99999;
   &:hover {
     transform: scale(0.9);
