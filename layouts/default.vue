@@ -27,8 +27,10 @@ onMounted(() => {
     <!-- </div> -->
     <div class="default__wrap">
       <div class="default__menu">
-        <!-- <div class="default__menu-logo"><Logo></Logo></div> -->
-        <!-- <menu></menu> -->
+        <div class="default__menu-logo">
+          <HomeLogo />
+        </div>
+        <UiMenu />
       </div>
       <div class="default__content">
         <slot />

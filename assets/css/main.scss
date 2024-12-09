@@ -1,3 +1,14 @@
+:root {
+  --text-color: var(--#222);
+  --contrast: var(--#c1bb63);
+  --active: var(--#044a04);
+  --accent-dark: var(--#68273d);
+  --accent: var(--#d2570a);
+  --accent-light: var(--#e7bfbf);
+  --text-light: var(--#d1c2ae);
+  --default: var(--#2a2a2a);
+}
+
 html {
   font-size: 62.5%;
   @media screen and (max-width: 1200px) {
@@ -6,7 +17,7 @@ html {
 }
 * {
   &:focus {
-    outline: 1px solid $accent;
+    outline: 1px solid var(--accent);
   }
 }
 body {
@@ -15,7 +26,7 @@ body {
   font-family: Roboto, sans-serif;
   font-size: 1.8rem;
   color: white;
-  background: $default;
+  background: var(--default);
   &::after {
     content: '';
     position: absolute;
@@ -34,8 +45,8 @@ body {
   }
 }
 .admin-layout {
-  color: $text-color;
-  background: $default;
+  color: var(--text-color);
+  background: var(--default);
 }
 * {
   box-sizing: border-box;
@@ -111,7 +122,7 @@ a {
   /* Internet Explorer/Edge */
 }
 *:focus {
-  outline: 1px solid $accent;
+  outline: 1px solid var(--accent);
 }
 .title {
   font-size: 5rem;
