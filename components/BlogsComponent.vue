@@ -19,7 +19,6 @@ const props = defineProps({
 });
 
 const runtimeConfig = useRuntimeConfig();
-const apiBase = runtimeConfig.public.apiBase;
 const server_url = runtimeConfig.public.server_url;
 </script>
 <template>
