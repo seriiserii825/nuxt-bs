@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 useHead({
   title: "Burduja Sergiu" + " | Главная",
   meta: [
@@ -36,6 +37,7 @@ useHead({
 <template>
   <div class="home">
     <HomeIntro />
+    <SectionHeader title="Обо мне"/>
     <!-- <section-header title="Обо мне" /> -->
     <!-- <About /> -->
     <!-- <section-header title="Последние посты" /> -->
