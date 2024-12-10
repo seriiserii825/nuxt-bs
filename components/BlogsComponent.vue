@@ -33,7 +33,7 @@ const server_url = runtimeConfig.public.server_url;
         :slug="post.slug"
         :title="post.title"
         :date="post.created_at"
-        :img_url="`${server_url}/${post.category.image}`"
+        :img_url="`${server_url}${post.category.image}`"
       />
     </div>
   </div>

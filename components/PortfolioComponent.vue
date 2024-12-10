@@ -10,7 +10,7 @@ const server_url = runtimeConfig.public.server_url;
 </script>
 <template>
   <div class="portfolio">
-    <img :src="`${server_url}${item.image}`" alt="" />
+    <img v-if="item.image" :src="`${server_url}${item.image}`" alt="" />
     <div class="portfolio__content">
       <h2 class="portfolio__title">{{ item.title }}</h2>
       <div class="portfolio__type" v-if="item.taxonomy">{{ item.taxonomy.title }}</div>
