@@ -4,9 +4,9 @@
     <div class="intro__content">
       <h2>Burduja Sergiu</h2>
       <h3>WebDeveloper</h3>
-      <UiBtn>
-        <nuxt-link to="/services">Мои услуги</nuxt-link>
-      </UiBtn>
+      <Btn>
+      <nuxt-link to="/services">Мои услуги</nuxt-link>
+      </Btn>
     </div>
   </div>
 </template>

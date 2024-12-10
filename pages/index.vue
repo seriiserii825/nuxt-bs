@@ -38,8 +38,7 @@ useHead({
   <div class="home">
     <HomeIntro />
     <SectionHeader title="Обо мне"/>
-    <!-- <section-header title="Обо мне" /> -->
-    <!-- <About /> -->
+    <About />
     <!-- <section-header title="Последние посты" /> -->
     <!-- <div class="last-posts"> -->
     <!--   <blogs-component :posts="posts" align="center" /> -->
