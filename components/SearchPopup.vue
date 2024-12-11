@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type {IDatum} from '~/interfaces/ISearchPopupResponse';
+
 const emits = defineEmits(["emit_popup"]);
 const search = ref("");
 const search_ref = ref<HTMLInputElement>();
-const search_list = ref([]);
+const search_list = ref<IDatum[]>([]);
 const runtimeConfig = useRuntimeConfig();
 const apiBase = runtimeConfig.public.apiBase;
 function onInput() {
