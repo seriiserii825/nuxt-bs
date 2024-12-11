@@ -36,7 +36,7 @@ onMounted(() => {
         <slot />
       </div>
     </div>
-    <!-- <footer></footer> -->
+    <Footer />
   </div>
 </template>
 <style lang="scss">
