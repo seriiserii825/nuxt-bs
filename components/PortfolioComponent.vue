@@ -7,10 +7,12 @@ defineProps({
 });
 const runtimeConfig = useRuntimeConfig();
 const server_url = runtimeConfig.public.server_url;
+const local_url = runtimeConfig.public.local_url;
 </script>
 <template>
   <div class="portfolio">
     <img v-if="item.image" :src="`${server_url}${item.image}`" alt="" />
+    <img v-else :src="`${local_url}/images/no-image.jpg`" alt="">
     <div class="portfolio__content">
       <h2 class="portfolio__title">{{ item.title }}</h2>
       <div class="portfolio__type" v-if="item.taxonomy">{{ item.taxonomy.title }}</div>
@@ -24,7 +26,7 @@ const server_url = runtimeConfig.public.server_url;
 .portfolio {
   position: relative;
   padding: 3rem;
-  height: 18rem;
+  aspect-ratio: 1/0.7;
   overflow: hidden;
   &:hover {
     &::before {
