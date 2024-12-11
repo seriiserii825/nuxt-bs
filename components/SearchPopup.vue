@@ -3,17 +3,18 @@ const emits = defineEmits(["emit_popup"]);
 const search = ref("");
 const search_ref = ref<HTMLInputElement>();
 const search_list = ref([]);
+const runtimeConfig = useRuntimeConfig();
+const apiBase = runtimeConfig.public.apiBase;
 function onInput() {
   if (search.value.length > 1) {
-    // $axios
-    //   .get(`/post?limit=20&offset=0&search=${search}`)
-    //   .then((res) => {
-    //     const result = res.data.data;
-    //     search_list = result;
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response, "error.response");
-    //   });
+    $fetch(`${apiBase}/post?limit=20&offset=0&search=` + search.value)
+      .then((res) => {
+        const result = res.data;
+        search_list.value = result;
+      })
+      .catch((error) => {
+        console.log(error.response, "error.response");
+      });
   } else {
     search_list.value = [];
   }
@@ -26,31 +27,6 @@ onMounted(() => {
     search_ref.value.focus();
   }
 });
-// export default {
-//   methods: {
-//     onInput() {
-//       if (this.search.length > 1) {
-//         this.$axios
-//           .get(`/post?limit=20&offset=0&search=${this.search}`)
-//           .then((res) => {
-//             const result = res.data.data;
-//             this.search_list = result;
-//           })
-//           .catch((error) => {
-//             console.log(error.response, "error.response");
-//           });
-//       } else {
-//         this.search_list = [];
-//       }
-//     },
-//     hidePopup() {
-//       this.$emit("hide");
-//     },
-//   },
-//   mounted() {
-//     this.$refs.search.focus();
-//   },
-// };
 </script>
 <template>
   <div class="search-popup">
