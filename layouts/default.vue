@@ -21,6 +21,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="default">
+    <SearchPopup v-if="is_visible_popup" @emit_popup="hideSearch"></SearchPopup>
     <!-- <SearchPopup v-if="is_visible_popup" @hide="hideSearch"></SearchPopup> -->
     <!-- <div class="show-search" @click="showSearch"> -->
     <!--   <img src="/svg/search.svg" width="50" alt="" /> -->
