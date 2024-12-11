@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+  compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  css: ['~/assets/css/main.scss'],
+  css: ["~/assets/css/main.scss"],
   runtimeConfig: {
     public: {
       apiBase: "http://localhost:8080/api",
@@ -10,4 +10,7 @@ export default defineNuxtConfig({
       local_url: "http://localhost:3000",
     },
   },
-})
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
+});
