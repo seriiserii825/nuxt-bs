@@ -6,15 +6,18 @@ useHead({
 const is_visible_popup = ref(false);
 
 function showSearch() {
-  const is_visible_popup = ref(true);
+  is_visible_popup.value = true;
 }
 function hideSearch() {
-  const is_visible_popup = ref(false);
+  is_visible_popup.value = false;
 }
 onMounted(() => {
   document.addEventListener("keyup", (e) => {
     if (e.code === "Escape" && is_visible_popup) {
       hideSearch();
+    }
+    if (e.ctrlKey && e.code === "KeyK") {
+      showSearch();
     }
   });
 });
@@ -22,10 +25,9 @@ onMounted(() => {
 <template>
   <div class="default">
     <SearchPopup v-if="is_visible_popup" @emit_popup="hideSearch"></SearchPopup>
-    <!-- <SearchPopup v-if="is_visible_popup" @hide="hideSearch"></SearchPopup> -->
-    <!-- <div class="show-search" @click="showSearch"> -->
-    <!--   <img src="/svg/search.svg" width="50" alt="" /> -->
-    <!-- </div> -->
+    <div class="show-search" @click="showSearch">
+      <img src="/svg/search.svg" width="50" alt="" />
+    </div>
     <div class="default__wrap">
       <div class="default__menu">
         <div class="default__menu-logo">

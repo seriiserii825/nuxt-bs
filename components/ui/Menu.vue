@@ -25,10 +25,17 @@ isRouteActive("blog");
         >Портфолио</nuxt-link
       >
     </li>
+    <li class="menu__info">Press Ctrl+Shift+k to search</li>
   </ul>
 </template>
 <style lang="scss">
 .menu {
+  &__info {
+    margin-top: 3rem;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--accent);
+  }
   a {
     position: relative;
     display: inline-block;
