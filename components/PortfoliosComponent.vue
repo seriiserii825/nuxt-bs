@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type {IPortfolioItem} from '~/interfaces/IPortfolioResponse';
-
+import type { IPortfolioItem } from "~/interfaces/IPortfolioResponse";
 
 const props = defineProps({
   portfolios: {
@@ -17,6 +16,11 @@ const props = defineProps({
         :item="item"
         :key="item.id"
       />
+    </div>
+    <div class="last-posts__btn">
+      <Btn v-if="$route.path === '/'">
+        <NuxtLink to="/portfolio">Посмотреть все работы</NuxtLink>
+      </Btn>
     </div>
   </div>
 </template>

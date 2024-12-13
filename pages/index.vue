@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import type { IHomeResponse, IPortfolio, IPost } from "~/interfaces/IHome";
+import type { IHomeResponse, IPost } from "~/interfaces/IHome";
+import type { IPortfolioItem } from "~/interfaces/IPortfolioResponse";
 
 useHead({
   title: "Burduja Sergiu" + " | Главная",
@@ -16,7 +17,7 @@ useHead({
 const runtimeConfig = useRuntimeConfig();
 const apiBase = runtimeConfig.public.apiBase;
 const posts = ref<IPost[]>([]);
-const portfolios = ref<IPortfolio[]>([]);
+const portfolios = ref<IPortfolioItem[]>([]);
 const { data } = await useFetch(`${apiBase}/home`, {
   headers: {
     "Content-Type": "application/json",
@@ -42,15 +43,13 @@ onMounted(() => {
       <BlogsComponent v-if="posts && posts.length" :posts="posts" />
       <div class="last-posts__btn">
         <btn>
-          <router-link to="/blog">Посмотреть все посты</router-link>
+          <NuxtLink to="/blog">Посмотреть все посты</NuxtLink>
         </btn>
       </div>
     </div>
     <SectionHeader title="Последние работы порртфолио" />
     <div v-if="portfolios && portfolios.length" class="last-portfolio">
-      <PortfoliosComponent
-        :portfolios="portfolios"
-      />
+      <PortfoliosComponent :portfolios="portfolios" />
     </div>
   </div>
 </template>

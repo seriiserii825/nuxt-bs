@@ -1,6 +1,8 @@
+import type {IPortfolioItem} from "./IPortfolioResponse";
+
 export interface IHomeResponse {
     posts: IPost[];
-    portfolios: IPortfolio[];
+    portfolios: IPortfolioItem[];
 }
 
 export interface IPost {
@@ -22,15 +24,4 @@ export interface ICategory {
     image:      string;
     created_at: Date;
     updated_at: Date;
-}
-export interface IPortfolio {
-    id:          number;
-    title:       string;
-    slug:        string;
-    image:       null;
-    url:         null;
-    taxonomy_id: null;
-    taxonomy:    null;
-    created_at:  Date;
-    updated_at:  Date;
 }
