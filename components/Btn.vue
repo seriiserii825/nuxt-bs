@@ -8,12 +8,16 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  active : {
+    type: Boolean,
+    default: false
+  }
 });
 </script>
 <template>
   <div
     class="btn"
-    :class="{ small: size === 'small', dark: props.bg === 'dark' }"
+    :class="{ small: size === 'small', dark: props.bg === 'dark', active: props.active }"
   >
     <slot />
   </div>
@@ -41,7 +45,8 @@ const props = defineProps({
   &.small {
     font-size: 1.2rem;
   }
-  &.dark {
+  &.dark,
+  &.active{
     background-color: #000;
   }
   span {

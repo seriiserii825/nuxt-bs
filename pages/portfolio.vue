@@ -21,17 +21,25 @@ const taxonomy_id = ref(0);
 const search = ref("");
 const search_ref = ref(null);
 const total = ref(0);
+const is_loading = ref(false);
+const active_taxonomy = ref(0);
 const { data } = useFetch(`${runtimeConfig.public.apiBase}/portfolio`);
 const portfolios = ref<IPortfolioResponse["data"]>([]);
 async function filterByTaxonomy(id: number) {
+  active_taxonomy.value = id;
+  is_loading.value = true;
   taxonomy_id.value = id;
   page.value = 1;
   const url = `${runtimeConfig.public.apiBase}/portfolio-filter?taxonomy_id=${id}`;
-  const response = await $fetch(url); console.log(response, "response");
+  const response = await $fetch(url);
+  console.log(response, "response");
   if (response) {
     portfolios.value = response.data;
     total.value = response.total;
   }
+  setTimeout(() => {
+    is_loading.value = false;
+  }, 600);
 }
 async function goToPage(page_num: number) {
   page.value = page_num;
@@ -67,15 +75,18 @@ onMounted(() => {
         v-if="taxonomies && taxonomies.length"
       >
         <Btn><span @click="filterByTaxonomy(0)">All</span></Btn>
-        <Btn v-for="category in taxonomies" :key="category.id">
+        <Btn v-for="category in taxonomies" :key="category.id" :active="category.id === active_taxonomy">
           <span @click="filterByTaxonomy(category.id)">{{
             category.title
           }}</span>
         </Btn>
       </div>
-      <div class="portfolios" v-if="portfolios && portfolios.length">
-        <PortfoliosComponent :portfolios="portfolios" />
-      </div>
+      <Preloader v-if="is_loading" />
+      <template v-else>
+        <div class="portfolios" v-if="portfolios && portfolios.length">
+          <PortfoliosComponent :portfolios="portfolios" />
+        </div>
+      </template>
     </div>
   </div>
 </template>
