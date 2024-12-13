@@ -44,7 +44,19 @@ async function filterByTaxonomy(id: number) {
 async function goToPage(page_num: number) {
   page.value = page_num;
 }
-async function onSearch() {}
+async function onSearch() {
+  is_loading.value = true;
+  page.value = 1;
+  const url = `${runtimeConfig.public.apiBase}/portfolio-filter?search=${search.value}`;
+  const response = await $fetch(url);
+  if (response) {
+    portfolios.value = response.data;
+    total.value = response.total;
+  }
+  setTimeout(() => {
+    is_loading.value = false;
+  }, 600);
+}
 const total_pages = computed(() => {
   return Math.ceil(total.value / per_page.value);
 });
