@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { IPortfolioResponse } from "~/interfaces/IPortfolioResponse";
+
 // import PortfoliosComponent from "@/elements/PortfoliosComponent";
 // import Btn from "@/ui/Btn";
 // import SectionHeader from "@/ui/SectionHeader";
@@ -20,14 +22,13 @@ useHead({
 
 const page = ref(1);
 const per_page = ref(4);
-const taxonomies = ref([]);
+const taxonomies = ref(<IPortfolioResponse["taxonomies"]>[]);
 const taxonomy_id = ref(0);
 const search = ref("");
 const search_ref = ref(null);
 const total = ref(0);
-const portfolios = ref([]);
 const { data } = useFetch(`${runtimeConfig.public.apiBase}/portfolio`);
-console.log(data, "data");
+const portfolios = ref<IPortfolioResponse["data"]>([]);
 // async asyncData({ store }) {
 //   try {
 //     await store.dispatch("taxonomy/fetchData");
@@ -82,6 +83,14 @@ async function onSearch() {
 const total_pages = computed(() => {
   return Math.ceil(total.value / per_page.value);
 });
+onMounted(() => {
+  if (data.value) {
+    taxonomies.value = data.value.taxonomies;
+    portfolios.value = data.value.data;
+    // total.value = data.value.total;
+    console.log(total_pages, "total_pages");
+  }
+});
 </script>
 <template>
   <div class="page-portfolio">
@@ -96,63 +105,44 @@ const total_pages = computed(() => {
           @input="onSearch"
         />
       </div>
-      <!-- <div -->
-      <!--   class="page-portfolio__filter" -->
-      <!--   v-if="taxonomies &#38;&#38; taxonomies.length" -->
-      <!-- > -->
-      <!--   <btn><span @click="filterByTaxonomy(0)">All</span></btn> -->
-      <!--   <btn v-for="category in taxonomies" :key="category.id"> -->
-      <!--     <span @click="filterByTaxonomy(category.id)">{{ -->
-      <!--       category.title -->
-      <!--     }}</span> -->
-      <!--   </btn> -->
-      <!-- </div> -->
-      <!-- <div class="portfolios" v-if="portfolios &#38;&#38; portfolios.length"> -->
-        <!-- <div class="portfolios__wrap"> -->
-        <!--   <PortfolioComponent -->
-        <!--     v-for="item in portfolios" -->
-        <!--     :item="item" -->
-        <!--     :key="item.id" -->
-        <!--   /> -->
-        <!-- </div> -->
-
-        <!-- <client-only> -->
-        <!--   <vue-paginate -->
-        <!--     v-if="total_pages > 1" -->
-        <!--     :hide-prev-next="true" -->
-        <!--     :page-count="total_pages" -->
-        <!--     :page-range="5" -->
-        <!--     :margin-pages="2" -->
-        <!--     :click-handler="goToPage" -->
-        <!--     :prev-text="'<<'" -->
-        <!--     :next-text="'>>'" -->
-        <!--     :container-class="'pagination'" -->
-        <!--     :page-class="'page-item'" -->
-        <!--     v-model="page" -->
-        <!--   > -->
-        <!--   </vue-paginate> -->
-        <!-- </client-only> -->
-      <!-- </div> -->
+      <div
+        class="page-portfolio__filter"
+        v-if="taxonomies && taxonomies.length"
+      >
+        <btn><span @click="filterByTaxonomy(0)">All</span></btn>
+        <btn v-for="category in taxonomies" :key="category.id">
+          <span @click="filterByTaxonomy(category.id)">{{
+            category.title
+          }}</span>
+        </btn>
+      </div>
+      <div class="portfolios" v-if="portfolios && portfolios.length">
+        <PortfoliosComponent :portfolios="portfolios" />
+      </div>
     </div>
   </div>
 </template>
 <style lang="scss">
 .page-portfolio {
   &__wrap {
-    padding: 6rem 10rem;
+    padding: 6.4rem 3.2rem;
   }
   &__filter {
+    display: flex;
+    flex-wrap: wrap;
     margin-bottom: 6rem;
-  }
-  .btn {
-    margin-right: 1rem;
+    gap: 1.6rem;
   }
 }
 .portfolios {
   &__wrap {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(33rem, 1fr));
-    grid-gap: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.8rem;
+  }
+  &__item {
+    margin: 0 0.8rem 1.6rem;
+    flex: 0 0 calc(25% - 1.6rem);
   }
 }
 
