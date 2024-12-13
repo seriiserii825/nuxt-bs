@@ -58,7 +58,7 @@ isRouteActive("blog");
       opacity: 0;
       transition: all 0.4s;
     }
-    &.nuxt-link-exact-active {
+    &.router-link-exact-active {
       color: var(--accent);
       &::before {
         opacity: 1;
