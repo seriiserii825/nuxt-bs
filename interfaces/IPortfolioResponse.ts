@@ -1,9 +1,13 @@
 export interface IPortfolioResponse {
   total: number;
-  offset: null;
-  limit: null;
   data: IPortfolioItem[];
   taxonomies: ITaxonomy[];
+}
+export interface IPortfolioFilter {
+  total: number;
+  data: IPortfolioItem[];
+  limit: number;
+  offset: number;
 }
 export interface ITaxonomy {
   id: number;
