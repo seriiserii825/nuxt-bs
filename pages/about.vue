@@ -19,8 +19,8 @@ useHead({
 <template>
   <div class="page-about">
     <Skills />
-    <!-- <section-header title="Обо мне"></section-header> -->
-    <!-- <About :show_btn="false" /> -->
+    <SectionHeader title="Обо мне" />
+    <AboutComponent :show_btn="false" />
   </div>
 </template>
 <style lang="scss">
