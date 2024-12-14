@@ -21,9 +21,14 @@ const taxonomy_id = ref(0);
 const search = ref("");
 const search_ref = ref(null);
 const total = ref(0);
+const limit = ref(12);
+const offset = ref(0);
 const is_loading = ref(false);
 const active_taxonomy = ref(0);
-const { data } = useFetch(`${runtimeConfig.public.apiBase}/portfolio`);
+const { data } = useFetch(
+  `${runtimeConfig.public.apiBase}/portfolio?limit=${limit.value}&offset=${offset.value}`
+);
+// console.log(data, "data");
 const portfolios = ref<IPortfolioResponse["data"]>([]);
 async function filterByTaxonomy(id: number) {
   active_taxonomy.value = id;
@@ -87,7 +92,11 @@ onMounted(() => {
         v-if="taxonomies && taxonomies.length"
       >
         <Btn><span @click="filterByTaxonomy(0)">All</span></Btn>
-        <Btn v-for="category in taxonomies" :key="category.id" :active="category.id === active_taxonomy">
+        <Btn
+          v-for="category in taxonomies"
+          :key="category.id"
+          :active="category.id === active_taxonomy"
+        >
           <span @click="filterByTaxonomy(category.id)">{{
             category.title
           }}</span>
