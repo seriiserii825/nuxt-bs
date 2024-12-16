@@ -15,7 +15,6 @@ useHead({
 });
 
 const page = ref(1);
-const per_page = ref(4);
 const taxonomies = ref(<IPortfolioResponse["taxonomies"]>[]);
 const taxonomy_id = ref(0);
 const search = ref("");
@@ -48,6 +47,18 @@ async function filterByTaxonomy(id: number) {
 }
 async function goToPage(page_num: number) {
   page.value = page_num;
+  is_loading.value = true;
+  const url = `${runtimeConfig.public.apiBase}/portfolio?limit=${
+    limit.value
+  }&offset=${(page_num - 1) * limit.value}`;
+  const response = await $fetch(url);
+  if (response) {
+    portfolios.value = response.data;
+    total.value = response.total;
+  }
+  setTimeout(() => {
+    is_loading.value = false;
+  }, 600);
 }
 async function onSearch() {
   is_loading.value = true;
@@ -63,14 +74,14 @@ async function onSearch() {
   }, 600);
 }
 const total_pages = computed(() => {
-  return Math.ceil(total.value / per_page.value);
+  return Math.ceil(total.value / limit.value);
 });
 onMounted(() => {
   if (data.value) {
     taxonomies.value = data.value.taxonomies;
     portfolios.value = data.value.data;
     total.value = data.value.total;
-    console.log(total_pages, "total_pages");
+    // console.log(total_pages, "total_pages");
   }
 });
 </script>
@@ -108,6 +119,11 @@ onMounted(() => {
           <PortfoliosComponent :portfolios="portfolios" />
         </div>
       </template>
+      <Paginate
+        :current_page="page"
+        :total_pages="total_pages"
+        @update_current="goToPage"
+      />
     </div>
   </div>
 </template>
